@@ -1,6 +1,7 @@
 import React from 'react'
 import {Nav,Navbar,Container} from 'react-bootstrap'
-import NavBar from './NavBar'
+
+
 
 const Header = () => {
     return (

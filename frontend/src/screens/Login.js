@@ -2,7 +2,9 @@ import React from 'react'
 
 const Login = () => {
     return (
-        <NavBar/>
+        <div>
+            LOGIN PAGE
+        </div>
     )
 }
 
