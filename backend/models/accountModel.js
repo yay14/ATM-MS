@@ -34,15 +34,20 @@ const beneficiarySchema = mongoose.Schema(
     }
   )
 
-const savingsAccountSchema = mongoose.Schema(
+const accountSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: 'User',
     },
+    accounts: {
+    accountType: { 
+      type: String,
+      required: true,
+    },
     accountNumber: {
-      type: Number,
+      type: String,
       required: true,
     },
     balance: {
@@ -53,6 +58,7 @@ const savingsAccountSchema = mongoose.Schema(
   
     transaction: [transactionSchema],
     beneficiary: [beneficiarySchema],
+    }
 
   },
   {
@@ -60,6 +66,6 @@ const savingsAccountSchema = mongoose.Schema(
   }
 )
 
-const SavingsAccount = mongoose.model('SavingsAccount', savingsAccountSchema)
+const Account = mongoose.model('Account', accountSchema)
 
-export default  SavingsAccount
+export default  Account

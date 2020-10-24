@@ -40,15 +40,11 @@ const UserNav = () => {
             <Nav.Link >MINI-STATEMENT</Nav.Link>
             </LinkContainer>
            
-            <LinkContainer to="/profile">
-            <Nav.Link >PROFILE/CHANGE PIN</Nav.Link>
+            <LinkContainer to="/pin_change">
+            <Nav.Link >CHANGE PIN</Nav.Link>
             </LinkContainer>
            
             </Nav>
-
-          <LinkContainer  to="/">
-          <Button  variant="outline-success" >LOGOUT</Button>
-          </LinkContainer>
           
          </Navbar.Collapse>
 

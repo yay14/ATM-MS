@@ -3,24 +3,38 @@ import Header from './components/Header'
 import {Container} from 'react-bootstrap'
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import Welcome from './screens/Welcome';
-import Login from './screens/Login';
+import Login from './screens/Login.js';
 import Register from './screens/Register';
+import ProfileScreen from './screens/UserProfile.js';
+import UserListScreen from './screens/userList.js';
+import UserEditScreen from './screens/userUpdate.js';
+
+
 
 function App() {
   return (
     <Router>
 
       <Header/>
-      <Container>
+     
       <main>
-      <Route path='/'component={Welcome} exact />
-      <Route path='/login'component={Login} exact />
-      <Route path='/signup'component={Register} exact />
-      </main>
-      </Container>
+      <Container>
+     
+      <Route path='/login'component={Login} />
+      <Route path='/register'component={Register} />
+
+          <Route path='/profile' component={ProfileScreen} /> 
+          <Route path='/admin/userlist' component={UserListScreen} />
+          <Route path='/admin/user/:id/edit' component={UserEditScreen} />
+          
+          <Route path='/'component={Welcome} exact />
+        </Container>
+        </main>
+        </Router>
+     
      
     
-    </Router>
+    
   );
 }
 
