@@ -1,5 +1,5 @@
 import React from 'react'
-import {Nav,Navbar,Container,Button,NavDropdown} from 'react-bootstrap'
+import {Nav,Navbar,Container,NavDropdown} from 'react-bootstrap'
 import {LinkContainer} from 'react-router-bootstrap'
 
 const UserNav = () => {
