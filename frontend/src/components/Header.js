@@ -33,6 +33,16 @@ const Header = () => {
                  {userInfo ? 
                  (
                    <>
+                {userInfo.isAdmin ? (
+                <NavDropdown title='Admin' id='adminmenu'>
+                  <LinkContainer to='/admin/userlist'>
+                    <NavDropdown.Item>Users</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    LOGOUT
+                  </NavDropdown.Item>
+                </NavDropdown>
+                ):
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -41,7 +51,9 @@ const Header = () => {
                     Logout
                   </NavDropdown.Item>
                 </NavDropdown>
-                <UserNav/>
+
+                
+                }
                 </>
                     ) : (
                     <>
@@ -57,20 +69,16 @@ const Header = () => {
               )}
 
 
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title='Admin' id='adminmenu'>
-                  <LinkContainer to='/admin/userlist'>
-                    <NavDropdown.Item>Users</NavDropdown.Item>
-                  </LinkContainer>
-                  <NavDropdown.Item onClick={logoutHandler}>
-                    LOGOUT
-                  </NavDropdown.Item>
-                </NavDropdown>
-              )}
+
             </Nav>
             </Navbar.Collapse>
             </Container>
+          
             </Navbar>
+            {userInfo && userInfo.isAdmin=== false?
+            <UserNav/>:
+            <>
+            </>}
            
           
         

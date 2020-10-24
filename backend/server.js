@@ -3,7 +3,7 @@ import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import colors from 'colors'
 import {notFound,errorHandler} from './middleware/errorMiddleware.js'
-
+import cors from 'cors'
 import userRoutes from './routes/userRoutes.js'
 
 dotenv.config()
@@ -12,6 +12,7 @@ connectDB()
 
 const app=express()
 
+app.use(cors());
 app.use(express.json())// allows to accept json data in body
 
 

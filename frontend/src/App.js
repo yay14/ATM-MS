@@ -8,10 +8,13 @@ import Register from './screens/Register';
 import ProfileScreen from './screens/UserProfile.js';
 import UserListScreen from './screens/userList.js';
 import UserEditScreen from './screens/userUpdate.js';
+import dotenv from 'dotenv'
 
+dotenv.config()
 
 
 function App() {
+  
   return (
     <Router>
 
