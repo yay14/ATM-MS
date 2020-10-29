@@ -13,6 +13,8 @@ const Register = ({ location, history }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
+   
+    const [account, setAccount] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState(null)
@@ -35,7 +37,7 @@ const Register = ({ location, history }) => {
       if (password !== confirmPassword) {
         setMessage('Passwords do not match')
       } else {
-        dispatch(register(name, email,phone, password))
+        dispatch(register(name, email, phone, account, password))
       }
     }
     return (
@@ -75,9 +77,19 @@ const Register = ({ location, history }) => {
               onChange={(e) => setPhone(e.target.value)}
             ></Form.Control>
           </Form.Group>
+
+          <Form.Group controlId='account'>
+            <Form.Label>Bank Account No.</Form.Label>
+            <Form.Control
+              type='account'
+              placeholder='Enter Account no.'
+              value={account}
+              onChange={(e) => setAccount(e.target.value)}
+            ></Form.Control>
+          </Form.Group>
   
           <Form.Group controlId='password'>
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Secret PIN</Form.Label>
             <Form.Control
               type='password'
               placeholder='Enter secret PIN'
@@ -87,10 +99,10 @@ const Register = ({ location, history }) => {
           </Form.Group>
   
           <Form.Group controlId='confirmPassword'>
-            <Form.Label>Confirm secret PIN to confirm</Form.Label>
+            <Form.Label>Confirm secret PIN </Form.Label>
             <Form.Control
               type='password'
-              placeholder='Confirm password'
+              placeholder='Re-enter PIN'
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
             ></Form.Control>

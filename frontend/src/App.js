@@ -7,6 +7,8 @@ import Login from './screens/Login.js';
 import Register from './screens/Register';
 import ProfileScreen from './screens/UserProfile.js';
 import UserListScreen from './screens/userList.js';
+import UserHome from './screens/UserHome.js';
+import AddRecepient from './screens/AddRecepient.js'
 import UserEditScreen from './screens/userUpdate.js';
 import dotenv from 'dotenv'
 
@@ -27,6 +29,9 @@ function App() {
       <Route path='/register'component={Register} />
 
           <Route path='/profile' component={ProfileScreen} /> 
+
+          <Route path='/home' component={UserHome} /> 
+          <Route path='/addrec' component={AddRecepient} />
           <Route path='/admin/userlist' component={UserListScreen} />
           <Route path='/admin/user/:id/edit' component={UserEditScreen} />
           

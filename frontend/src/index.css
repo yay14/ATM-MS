@@ -17,3 +17,13 @@ h3 {
     font-size: 1.4rem;
     padding: 0.5rem 0;
   }
+  .card-deck
+  {
+    padding-top: 10vh;
+    
+  }
+ .card-body
+ {
+   align-items: center;
+   display: grid;
+ }

@@ -15,7 +15,7 @@ const UserNav = () => {
 
           <Nav className="mr-auto">
 
-            <LinkContainer to="/user_home">
+            <LinkContainer to="/home">
             <Nav.Link >HOME</Nav.Link>
             </LinkContainer>
 
@@ -30,7 +30,7 @@ const UserNav = () => {
               
               <NavDropdown.Divider />
 
-              <LinkContainer to="/add_rec">
+              <LinkContainer to="/addrec">
                 <NavDropdown.Item >ADD RECIPIENT</NavDropdown.Item>
                 </LinkContainer>
               

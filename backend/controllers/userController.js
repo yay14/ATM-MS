@@ -2,6 +2,7 @@ import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 
+
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
@@ -16,6 +17,7 @@ const authUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      account:user.account,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
@@ -29,7 +31,7 @@ const authUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, phone, password } = req.body
+  const { name, email, phone, account, password } = req.body
 
   const userExists = await User.findOne({ email })
 
@@ -42,6 +44,7 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     phone,
+    account,
     password,
   })
 
@@ -51,9 +54,11 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      account: user.account,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
     })
+     
   } else {
     res.status(400)
     throw new Error('Invalid user data')
@@ -73,6 +78,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      account: user.account,
       isAdmin: user.isAdmin,
     })
   } else {
