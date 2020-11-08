@@ -2,12 +2,21 @@ import asyncHandler from 'express-async-handler'
 import generateToken from '../utils/generateToken.js'
 import User from '../models/userModel.js'
 
+import validator from 'express-validator'
+const { validationResult } = validator
 
 // @desc    Auth user & get token
 // @route   POST /api/users/login
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const firstError = errors.array().map(error => error.msg)[0];
+     res.status(400)
+     throw new Error(firstError)
+  } else {
 
   const user = await User.findOne({ email })
 
@@ -16,6 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      balance: user.balance,
       phone: user.phone,
       account:user.account,
       isAdmin: user.isAdmin,
@@ -25,6 +35,7 @@ const authUser = asyncHandler(async (req, res) => {
     res.status(401)
     throw new Error('Invalid email or password')
   }
+}
 })
 
 // @desc    Register a new user
@@ -32,6 +43,13 @@ const authUser = asyncHandler(async (req, res) => {
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, phone, account, password } = req.body
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const firstError = errors.array().map(error => error.msg)[0];
+     res.status(400)
+     throw new Error(firstError)
+  } else {
 
   const userExists = await User.findOne({ email })
 
@@ -54,6 +72,7 @@ const registerUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      balance: user.balance,
       account: user.account,
       isAdmin: user.isAdmin,
       token: generateToken(user._id),
@@ -63,6 +82,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400)
     throw new Error('Invalid user data')
   }
+}
 })
 
 // @desc    Get user profile
@@ -78,6 +98,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       phone: user.phone,
+      balance: user.balance,
       account: user.account,
       isAdmin: user.isAdmin,
     })
@@ -97,6 +118,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
     user.phone = req.body.phone || user.phone
+    user.balance = req.body.balance || user.balance
     if (req.body.password) {
       user.password = req.body.password
     }
@@ -108,6 +130,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       phone: updatedUser.phone,
+      balance: user.balance,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
     })

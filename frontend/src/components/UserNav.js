@@ -40,7 +40,7 @@ const UserNav = () => {
             <Nav.Link >MINI-STATEMENT</Nav.Link>
             </LinkContainer>
            
-            <LinkContainer to="/pin_change">
+            <LinkContainer to="/change">
             <Nav.Link >CHANGE PIN</Nav.Link>
             </LinkContainer>
            

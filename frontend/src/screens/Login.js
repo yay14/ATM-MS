@@ -47,10 +47,10 @@ const Login = ({ location, history }) => {
         </Form.Group>
 
         <Form.Group controlId='password'>
-          <Form.Label>Password</Form.Label>
+          <Form.Label>PIN</Form.Label>
           <Form.Control
             type='password'
-            placeholder='Enter password'
+            placeholder='Enter secret PIN'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Form.Control>

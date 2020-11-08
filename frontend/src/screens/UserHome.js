@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {LinkContainer} from 'react-router-bootstrap'
 
 const UserHome = () => {
     return (
@@ -13,14 +13,14 @@ const UserHome = () => {
                 <h4>Deposit to ATM</h4>
                <img class="card-img-top" src="../assets/deposit3.jpg" alt="Deposit"></img> 
                
-               <a href="#" class="btn btn-primary">Deposit</a>
+               <a href="/atm" class="btn btn-primary">Deposit</a>
                </div>
                 </div>
                 
                <div class="card bg-light border-primary mb-3">
                <img class="card-img-top" src="../assets/Balance-Enquiry-w.png" alt="Balance"></img> 
                <div class="card-body">
-               <a href="#" class="btn btn-primary">View Balance</a>
+               <a href="/atm" class="btn btn-primary">View Balance</a>
                </div>
                </div>
                <div class="card bg-light mb-3  border-primary text-center" >
@@ -28,7 +28,7 @@ const UserHome = () => {
                <div class="card-body">
                <h4>Withdraw from ATM</h4>
                <img class="card-img-top" src="../assets/withdraw3.jpg" alt="Withdraw"></img> 
-               <a href="#" class="btn btn-primary ">Withdraw</a>
+               <a href="/atm" class="btn btn-primary ">Withdraw</a>
                </div>
                </div>
                </div>

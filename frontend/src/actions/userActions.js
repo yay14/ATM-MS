@@ -70,6 +70,7 @@ export const logout = () => (dispatch) => {
 }
 
 export const register = (name, email,phone,account, password) => async (dispatch) => {
+  
   try {
     dispatch({
       type: USER_REGISTER_REQUEST,
@@ -86,7 +87,10 @@ export const register = (name, email,phone,account, password) => async (dispatch
       { name, email,phone,account, password },
       config
     )
+    
 
+    console.log(data)
+    
     dispatch({
       type: USER_REGISTER_SUCCESS,
       payload: data,
@@ -164,7 +168,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     }
 
     const { data } = await axios.put(`${process.env.REACT_APP_URL}/api/users/profile`, user, config)
-
+    console.log({data})
     dispatch({
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
