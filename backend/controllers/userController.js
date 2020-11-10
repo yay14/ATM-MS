@@ -33,7 +33,7 @@ const authUser = asyncHandler(async (req, res) => {
     })
   } else {
     res.status(401)
-    throw new Error('Invalid email or password')
+    throw new Error('Wrong email or password! Please try again')
   }
 }
 })
@@ -100,6 +100,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
       phone: user.phone,
       balance: user.balance,
       account: user.account,
+      password: user.password,
       isAdmin: user.isAdmin,
     })
   } else {
@@ -112,8 +113,15 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
-
+  
+  const errors = validationResult(req);
+  
+  if (!errors.isEmpty()) {
+    const firstError = errors.array().map(error => error.msg)[0];
+     res.status(400)
+     throw new Error(firstError)
+  } else {
+    const user = await User.findById(req.user._id)
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
@@ -138,7 +146,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     res.status(404)
     throw new Error('User not found')
   }
-})
+}})
 
 // @desc    Get all users
 // @route   GET /api/users

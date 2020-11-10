@@ -25,7 +25,7 @@ const validSign =
         min: 12,
         max: 12
     }).withMessage('Account number should be of 12 digits'),
-    check('password', 'password is required').notEmpty(),
+    check('password', 'PIN is required').notEmpty(),
     check('password').isNumeric()
     .withMessage('PIN must contain digits from 0-9 only'),
     check('password').isLength({
@@ -38,7 +38,7 @@ const validSign =
     check('email')
     .isEmail()
     .withMessage('Must be a valid email address'),
-    check('password', 'password is required').notEmpty(),
+    check('password', 'PIN is required').notEmpty(),
     check('password').isNumeric()
     .withMessage('PIN must contain digits from 0-9 only'),
     check('password').isLength({
@@ -47,4 +47,16 @@ const validSign =
     }).withMessage('PIN must be of 4 digits only')
 ];
 
-export {validLogin,validSign}
+const validUpdate = [
+
+    check('password', 'PIN is required').notEmpty(),
+    check('password').isNumeric()
+    .withMessage('PIN must contain digits from 0-9 only'),
+    check('password').isLength({
+        min: 4,
+        max: 4
+    }).withMessage('PIN must be of 4 digits only')
+    
+];
+
+export {validLogin,validSign,validUpdate}

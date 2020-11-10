@@ -15,7 +15,8 @@ import {
 
 import {
   validLogin,
-  validSign
+  validSign,
+  validUpdate
 } from '../utils/validate.js'
 
 import { protect, admin } from '../middleware/authMiddleware.js'
@@ -25,7 +26,7 @@ router.post('/login',validLogin, authUser)
 router
   .route('/profile')
   .get(protect, getUserProfile)
-  .put(protect, updateUserProfile)
+  .put(validUpdate,protect, updateUserProfile)
 router
   .route('/:id')
   .delete(protect, admin, deleteUser)

@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {Container} from 'react-bootstrap'
+
+import {Link} from 'react-router-bootstrap'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import { userRegisterReducer } from '../reducers/userReducers'
 
-const ATM= ({ location, history }) => {
+const Withdraw= ({ location, history }) => {
     const [name, setName] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
@@ -21,29 +23,28 @@ const ATM= ({ location, history }) => {
     const dispatch = useDispatch()
   
     const userDetails = useSelector((state) => state.userDetails)
-    const { loading, error, user } = userDetails
+    const { loading, user } = userDetails
   
     
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
   
     const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
-    const { success } = userUpdateProfile
+    const { success, error } = userUpdateProfile
   
   
     useEffect(() => {
       if (!userInfo) {
         history.push('/login')
       } else {
-        if (!user || !user.name || success) {
-          dispatch({ type: USER_UPDATE_PROFILE_RESET })
+        if (!user || !user.name ) {
           dispatch(getUserDetails('profile'))
          
         } else {
           setName(user.name)
           setEmail(user.email)
           setPhone(user.phone)
-          
+          setBalance(user.balance)
         }
  
       }
@@ -51,31 +52,39 @@ const ATM= ({ location, history }) => {
   
     const submitHandler = (e) => {
       e.preventDefault()
-      if (amount==='') {
-        setMessage('Please enter an amount')
-      } else {
-        setBalance((parseInt(user.balance)+parseInt(amount)))
+      if (parseInt(amount)>10000) {
+        setMessage('Maximum Limit Reached')
+      } else
+      if (parseInt(user.balance) < parseInt(amount)) {
         console.log(balance)
+        setMessage('Insufficient funds')
+      }else
+      if(balance === user.balance){
+       setBalance((parseInt(user.balance)-parseInt(amount)))
+       console.log(balance)
+     }else {
+        
         dispatch(updateUserProfile({ id: user._id,balance,name, email, phone, password }))
       }
     }
   
     return (
      <Container>
-      <br/>
+             <h1>Withdraw Cash from ATM</h1>
+      <hr/>
         <Col lg={4}>
           {message && <Message variant='danger'>{message}</Message>}
           
-          
+          {error && <Message variant='danger'>{error}</Message>}
           {console.log(balance)}
-          {success && <Message variant='success'>Profile Updated</Message>}
+          {success && <Message variant='success'>Withdraw Successfull, Collect your cash</Message>}
           {loading ? (
             <Loader />
           ) : error ? (
             <Message variant='danger'>{error}</Message>
           ) : (
             <div id="container">
-            <Form onSubmit={submitHandler}>
+            <Form className="justify-content-center" onSubmit={submitHandler}>
   
               <Form.Group controlId='amount'>
                 <Form.Label>Enter money</Form.Label>
@@ -83,17 +92,30 @@ const ATM= ({ location, history }) => {
                   type='amount'
                   placeholder='Please enter amount in Rupees here'
                   value={amount}
+                  required
                   onChange={(e) => setAmount(e.target.value)}
                 ></Form.Control>
               </Form.Group>
+
+              <Form.Group controlId='password'>
+              <Form.Label>Confirm Secret PIN</Form.Label>
+              <Form.Control
+                type='password'
+                placeholder='Enter PIN'
+                value={password}
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
   
               <Button type='submit' variant='primary'>
-                DEPOSIT
+                WITHDRAW
               </Button>
             </Form>
-
+           
             <hr/>
-          <h3>Balance : ₹ {balance}</h3>
+          
+         
             </div>
           )}
         </Col>
@@ -104,4 +126,4 @@ const ATM= ({ location, history }) => {
   }
 
 
-export default ATM
+export default Withdraw

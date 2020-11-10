@@ -13,7 +13,9 @@ import UserEditScreen from './screens/userUpdate.js';
 import dotenv from 'dotenv'
 
 import ChangePIN from './screens/ChangePIN.js';
-import ATM from './screens/ATM';
+import Deposit from './screens/Deposit';
+import Withdraw from './screens/Withdraw';
+import Balance from './screens/Balance';
 
 dotenv.config()
 
@@ -34,7 +36,9 @@ function App() {
           <Route path='/change' component={ChangePIN} /> 
 
           <Route path='/home' component={UserHome} /> 
-          <Route path='/atm' component={ATM} /> 
+          <Route path='/deposit' component={Deposit} /> 
+          <Route path='/withdraw' component={Withdraw} /> 
+          <Route path='/balance' component={Balance} /> 
          
 
           <Route path='/addrec' component={AddRecepient} />

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {Container} from 'react-bootstrap'
+import {Link} from 'react-router-bootstrap'
 import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
@@ -12,20 +13,21 @@ const ChangePIN = ({ location, history }) => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmNewPassword, setConfirmNewPassword] = useState('')
   const [message, setMessage] = useState(null)
 
   const dispatch = useDispatch()
 
   const userDetails = useSelector((state) => state.userDetails)
-  const { loading, error, user } = userDetails
+  const { loading, user } = userDetails
 
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
-  const { success } = userUpdateProfile
+  const { success, error } = userUpdateProfile
 
 
   useEffect(() => {
@@ -33,8 +35,8 @@ const ChangePIN = ({ location, history }) => {
       history.push('/login')
     } else {
       
-      if (!user || !user.name || success) {
-        dispatch({ type: USER_UPDATE_PROFILE_RESET })
+      if ( !user.name) {
+        // dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
        
       } else {
@@ -47,27 +49,28 @@ const ChangePIN = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match')
-    } else {
-      dispatch(updateUserProfile({ id: user._id, name, email, phone, password }))
-    }
+
+      if (newPassword !== confirmNewPassword) 
+      {
+        setMessage('New PINs do not match')
+      } else 
+      {
+        dispatch(updateUserProfile({ id: user._id, name, email, phone, password: newPassword }))
+      }
+    
   }
 
   return (
    <Container>
     <br/>
       <Col lg={4}>
+
         <h2>Change Your PIN </h2>
         {message && <Message variant='danger'>{message}</Message>}
-        
-          {console.log(userInfo)}
-        {success && <Message variant='success'>Profile Updated</Message>}
-        {loading ? (
-          <Loader />
-        ) : error ? (
-          <Message variant='danger'>{error}</Message>
-        ) : (
+        {success && <Message variant='success'>PIN Changed Successfully</Message>} 
+         {error && <Message variant='danger'>{error}</Message>}
+        {loading && <Loader />}
+
           <Form onSubmit={submitHandler}>
 
             <Form.Group controlId='password'>
@@ -76,27 +79,30 @@ const ChangePIN = ({ location, history }) => {
                 type='password'
                 placeholder='Enter old PIN'
                 value={password}
+                required
                 onChange={(e) => setPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='password'>
+            <Form.Group controlId='newPassword'>
               <Form.Label>New Secret PIN</Form.Label>
               <Form.Control
                 type='password'
                 placeholder='Enter new PIN'
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={newPassword}
+                required
+                onChange={(e) => setNewPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='confirmPassword'>
+            <Form.Group controlId='confirmNewPassword'>
               <Form.Label>Confirm new PIN</Form.Label>
               <Form.Control
                 type='password'
                 placeholder='Re-enter new PIN'
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={confirmNewPassword}
+                required
+                onChange={(e) => setConfirmNewPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
 
@@ -104,8 +110,6 @@ const ChangePIN = ({ location, history }) => {
               Update 
             </Button>
           </Form>
-
-        )}
       </Col>
      
     

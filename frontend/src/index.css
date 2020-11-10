@@ -4,6 +4,11 @@ main
 {
 min-width: 100vh;
 }
+p{
+  color: rgb(61, 187, 29);
+  font-size: x-large;
+  font-weight: bold;
+}
 
 h3 {
     padding: 1rem 0;
