@@ -30,17 +30,17 @@ const UserNav = () => {
               
               <NavDropdown.Divider />
 
-              <LinkContainer to="/addrec">
+              <LinkContainer to="/add-recepient">
                 <NavDropdown.Item >ADD RECIPIENT</NavDropdown.Item>
                 </LinkContainer>
               
             </NavDropdown>
 
-            <LinkContainer to="/mini"> 
+            <LinkContainer to="/mini-statement"> 
             <Nav.Link >MINI-STATEMENT</Nav.Link>
             </LinkContainer>
            
-            <LinkContainer to="/change">
+            <LinkContainer to="/change-pin">
             <Nav.Link >CHANGE PIN</Nav.Link>
             </LinkContainer>
            

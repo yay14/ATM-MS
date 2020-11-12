@@ -6,7 +6,8 @@ import Loader from '../components/Loader'
 import {Container} from 'react-bootstrap'
 
 import {Link} from 'react-router-bootstrap'
-import { getUserDetails, updateUserProfile } from '../actions/userActions'
+import { getUserDetails, transact } from '../actions/userActions'
+import { newTransaction } from '../actions/transactionActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 import { userRegisterReducer } from '../reducers/userReducers'
 
@@ -17,7 +18,6 @@ const Withdraw= ({ location, history }) => {
     const [balance, setBalance] = useState('')
     const [amount,setAmount]=useState('')
     const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState(null)
   
     const dispatch = useDispatch()
@@ -29,8 +29,8 @@ const Withdraw= ({ location, history }) => {
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
   
-    const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
-    const { success, error } = userUpdateProfile
+    const transaction = useSelector((state) => state.transact)
+    const { success, error } = transaction
   
   
     useEffect(() => {
@@ -64,7 +64,8 @@ const Withdraw= ({ location, history }) => {
        console.log(balance)
      }else {
         
-        dispatch(updateUserProfile({ id: user._id,balance,name, email, phone, password }))
+        dispatch(transact({ id: user._id,balance,name, email, phone, password }))
+        dispatch(newTransaction({ user,type: 'Withdraw',description: 'From Savings',status: 'Processed',amount , balance }))
       }
     }
   

@@ -113,7 +113,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // @route   PUT /api/users/profile
 // @access  Private
 const updateUserProfile = asyncHandler(async (req, res) => {
-  
+  const { password } = req.body
   const errors = validationResult(req);
   
   if (!errors.isEmpty()) {
@@ -122,13 +122,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
      throw new Error(firstError)
   } else {
     const user = await User.findById(req.user._id)
-  if (user) {
-    user.name = req.body.name || user.name
-    user.email = req.body.email || user.email
-    user.phone = req.body.phone || user.phone
-    user.balance = req.body.balance || user.balance
-    if (req.body.password) {
-      user.password = req.body.password
+    if (user) 
+    {
+
+    if ( await user.matchPassword(password)) {
+
+    if (req.body.newPassword) {
+      user.password = req.body.newPassword
     }
 
     const updatedUser = await user.save()
@@ -138,15 +138,64 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       phone: updatedUser.phone,
-      balance: user.balance,
+      balance: updatedUser.balance,
       isAdmin: updatedUser.isAdmin,
       token: generateToken(updatedUser._id),
     })
+    } else {
+      res.status(401)
+      throw new Error('Wrong PIN! Please try again')
+    }
+
+  
+   
   } else {
     res.status(404)
     throw new Error('User not found')
   }
 }})
+
+// @desc    Update balance after transaction
+// @route   PUT /api/users/transact
+// @access  Private
+const transact = asyncHandler(async (req, res) => {
+  const { password } = req.body
+  const errors = validationResult(req);
+  
+  if (!errors.isEmpty()) {
+    const firstError = errors.array().map(error => error.msg)[0];
+     res.status(400)
+     throw new Error(firstError)
+  } else {
+    const user = await User.findById(req.user._id)
+    if(user)
+    {
+    if ( await user.matchPassword(password)) {
+
+      user.balance = req.body.balance || user.balance
+      
+      const updatedUser = await user.save()
+  
+      res.json({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        phone: updatedUser.phone,
+        balance: updatedUser.balance,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser._id),
+      })
+      } else {
+        res.status(401)
+        throw new Error('Wrong PIN! Please try again')
+      }
+    }
+   else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+}})
+
 
 // @desc    Get all users
 // @route   GET /api/users
@@ -217,6 +266,7 @@ export {
   registerUser,
   getUserProfile,
   updateUserProfile,
+  transact,
   getUsers,
   deleteUser,
   getUserById,

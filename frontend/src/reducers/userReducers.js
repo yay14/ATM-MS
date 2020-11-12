@@ -25,6 +25,10 @@ import {
     USER_UPDATE_SUCCESS,
     USER_UPDATE_FAIL,
     USER_UPDATE_PROFILE_RESET,
+    TRANSACT_REQUEST,
+    TRANSACT_SUCCESS,
+    TRANSACT_FAIL,
+    TRANSACT_RESET
   } from '../constants/userConstants'
   
   export const userLoginReducer = (state = {}, action) => {
@@ -124,6 +128,23 @@ import {
       case USER_UPDATE_FAIL:
         return { loading: false, error: action.payload }
       case USER_UPDATE_RESET:
+        return {
+          user: {},
+        }
+      default:
+        return state
+    }
+  }
+
+  export const transactionReducer = (state = { user: {} }, action) => {
+    switch (action.type) {
+      case TRANSACT_REQUEST:
+        return { loading: true }
+      case TRANSACT_SUCCESS:
+        return { loading: false, success: true }
+      case TRANSACT_FAIL:
+        return { loading: false, error: action.payload }
+      case TRANSACT_RESET:
         return {
           user: {},
         }

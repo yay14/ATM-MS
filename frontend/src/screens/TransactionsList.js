@@ -1,32 +1,31 @@
+
 import React, { useEffect } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { listMyTransactions } from '../actions/transactionActions'
+import { listTransactions } from '../actions/transactionActions'
 
-const Ministatement = ({ history }) => {
-
+const TransactionsList = ({ history }) => {
     const dispatch = useDispatch()
 
-    const myTransactionList = useSelector((state) => state.myTransactionList)
-    const { loading, error, transactions } = myTransactionList
+    const transactionList = useSelector((state) => state.transactionList)
+    const { loading, error, transactions } = transactionList
   
     const userLogin = useSelector((state) => state.userLogin)
     const { userInfo } = userLogin
   
     useEffect(() => {
-      if (userInfo) {
-        dispatch(listMyTransactions())
+      if (userInfo && userInfo.isAdmin) {
+        dispatch(listTransactions())
       } else {
         history.push('/login')
       }
     }, [dispatch, history, userInfo])
   
-
     return (
         <>
-        <h1>Mini-Statement</h1>
+        <h1>All Transactions</h1>
         {loading ? (
           <Loader />
         ) : error ? (
@@ -36,6 +35,7 @@ const Ministatement = ({ history }) => {
             <thead>
               <tr>
                 <th>ID</th>
+                <th>USER</th>
                 <th>DATE</th>
                 <th>AMOUNT</th>
                 <th>TYPE</th>
@@ -49,12 +49,13 @@ const Ministatement = ({ history }) => {
               {transactions.map((transaction) => (
                 <tr key={transaction._id}>
                   <td>{transaction._id}</td>
+                  <td>{transaction.user && transaction.user.name}</td>
                   <td>{transaction.createdAt.substring(0, 10)}</td>
                   <td>{transaction.amount}</td>
                   <td>{transaction.type}</td>
-                  <td>{transaction.description}</td>
                   <td>{transaction.status}</td>
-                  <td>{transaction.balance}</td>
+                  <td>{transaction.description}</td>
+                  <td>{transaction.user.balance}</td>
                 </tr>
               ))}
             </tbody>
@@ -64,4 +65,5 @@ const Ministatement = ({ history }) => {
     )
 }
 
-export default Ministatement
+export default TransactionsList
+

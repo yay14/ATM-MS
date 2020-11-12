@@ -7,10 +7,14 @@ const validSign =
     .isLength({
         min: 4,
         max: 32
-    }).withMessage('name must be between 4 to 32 characters'),
+    }).withMessage('name must be between 4 to 32 characters')
+    .isNumeric()
+    .withMessage('Name must contain alphabets only'),
+
     check('email')
     .isEmail()
     .withMessage('Invalid email address'),
+
     check('phone').isNumeric()
     .withMessage('Phone number must contain digits from 0-9 only'),
     check('phone').isMobilePhone()
@@ -19,12 +23,14 @@ const validSign =
         min: 10,
         max: 10
     }).withMessage('Phone number should be of 10 digits'),
+
     check('account').isNumeric()
     .withMessage('Account number must contain digits from 0-9 only'),
     check('account').isLength({
         min: 12,
         max: 12
     }).withMessage('Account number should be of 12 digits'),
+
     check('password', 'PIN is required').notEmpty(),
     check('password').isNumeric()
     .withMessage('PIN must contain digits from 0-9 only'),
@@ -55,8 +61,27 @@ const validUpdate = [
     check('password').isLength({
         min: 4,
         max: 4
-    }).withMessage('PIN must be of 4 digits only')
+    }).withMessage('PIN must be of 4 digits only'),
+   
     
 ];
 
-export {validLogin,validSign,validUpdate}
+const validTransaction = [
+
+    check('password', 'PIN is required').notEmpty(),
+    check('password').isNumeric()
+    .withMessage('PIN must contain digits from 0-9 only'),
+    check('password').isLength({
+        min: 4,
+        max: 4
+    }).withMessage('PIN must be of 4 digits only'),
+    // check('amount')
+    // .isLength({
+    //     min: 100,
+    //     max: 10000
+    // }).withMessage('Re-enter amount between Rs 100 && Rs 10,000')
+    
+];
+
+
+export {validLogin,validSign,validUpdate,validTransaction}

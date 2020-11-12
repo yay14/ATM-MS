@@ -40,6 +40,7 @@ const Balance= ({ location, history }) => {
      <Container>
                 {loading && <Loader />}
                 <h3> Account Summary</h3>
+                  <hr/>
                 <p>Name :  {user.name}</p>
                 <p> Account Number :  {user.account} </p>
                 <p>Balance : ₹ {user.balance}</p>

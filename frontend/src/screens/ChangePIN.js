@@ -33,9 +33,7 @@ const ChangePIN = ({ location, history }) => {
   useEffect(() => {
     if (!userInfo) {
       history.push('/login')
-    } else {
-      
-      if ( !user.name) {
+    } else if ( !user.name) {
         // dispatch({ type: USER_UPDATE_PROFILE_RESET })
         dispatch(getUserDetails('profile'))
        
@@ -44,7 +42,7 @@ const ChangePIN = ({ location, history }) => {
         setEmail(user.email)
         setPhone(user.phone)
       }
-    }
+    
   }, [dispatch, history, userInfo, user, success])
 
   const submitHandler = (e) => {
@@ -55,7 +53,7 @@ const ChangePIN = ({ location, history }) => {
         setMessage('New PINs do not match')
       } else 
       {
-        dispatch(updateUserProfile({ id: user._id, name, email, phone, password: newPassword }))
+        dispatch(updateUserProfile({ id: user._id, name, email, phone, password, newPassword }))
       }
     
   }
